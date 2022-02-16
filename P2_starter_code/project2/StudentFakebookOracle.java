@@ -124,7 +124,7 @@ public final class StudentFakebookOracle extends FakebookOracle {
                 info.setCommonNameCount(42);
                 return info;
             */
-            System.out.println("query1");
+            // System.out.println("query1");
            ResultSet rst = stmt.executeQuery(
                 "SELECT LENGTH(First_Name) AS len_first_name " +
                 "FROM " + UsersTable + " " +
@@ -135,11 +135,11 @@ public final class StudentFakebookOracle extends FakebookOracle {
             while(rst.next()){
                if(rst.isFirst()){
                     longest = rst.getInt(1);
-                    System.out.println("getting longest");
+                    // System.out.println("getting longest");
                }
                if(rst.isLast()){
                     shortest = rst.getInt(1);
-                    System.out.println("getting shortest");
+                    // System.out.println("getting shortest");
                }
            }
 
@@ -153,7 +153,7 @@ public final class StudentFakebookOracle extends FakebookOracle {
            );
            while(rst.next()){
                firstname.addLongName(rst.getString(1));
-               System.out.println("getting longest_first_name");
+            //    System.out.println("getting longest_first_name");
            }
 
            rst = stmt.executeQuery(
@@ -164,11 +164,11 @@ public final class StudentFakebookOracle extends FakebookOracle {
            );
            while(rst.next()){
                firstname.addShortName(rst.getString(1));
-               System.out.println("getting shortest_first_name");
+            //    System.out.println("getting shortest_first_name");
            }
 
            // step2: finding the most common first name
-            System.out.println("query1.2");
+            // System.out.println("query1.2");
            rst = stmt.executeQuery(
             "SELECT COUNT(*) AS most_first_name, First_Name " +
             "FROM " + UsersTable + " " +
@@ -340,7 +340,7 @@ public final class StudentFakebookOracle extends FakebookOracle {
                 "GROUP BY Tag_Photo_id " +
                 "ORDER BY num_tags DESC, Tag_Photo_id "
             );
-            System.out.println("query created");
+            // System.out.println("query created");
             
             int it = 0;
             PhotoInfo photo = new PhotoInfo(0, 0, "", "");
@@ -354,7 +354,7 @@ public final class StudentFakebookOracle extends FakebookOracle {
                else{
                    break;
                }
-            System.out.println("line 357");
+            // System.out.println("line 357");
             try (Statement stmt_1 = oracle.createStatement(FakebookOracleConstants.AllScroll, FakebookOracleConstants.ReadOnly)){
                 ResultSet rst_1 = stmt_1.executeQuery(
                     "SELECT DISTINCT P.Photo_id, P.Album_id, P.Photo_link, A.Album_name, U.User_id, U.First_Name,U.Last_Name " + 
@@ -366,17 +366,17 @@ public final class StudentFakebookOracle extends FakebookOracle {
                     "ORDER BY U.User_id"
                 );
                   
-                System.out.println("query1 created");
+                // System.out.println("query1 created");
                  //int temp_count = 0;
                 while(rst_1.next()){
                     if(rst_1.isFirst()){
                         photo = new PhotoInfo(rst_1.getLong(1),rst_1.getLong(2),rst_1.getString(3),rst_1.getString(4));  
                         tagphoto = new TaggedPhotoInfo(photo);
-                        System.out.println("line 375");
+                        // System.out.println("line 375");
                     }
                     UserInfo user = new UserInfo(rst_1.getLong(5),rst_1.getString(6),rst_1.getString(7));
                     tagphoto.addTaggedUser(user);
-                    System.out.println("line 379");                    
+                    // System.out.println("line 379");                    
                 }//end inner while
                 rst_1.close();
                 stmt_1.close();
@@ -459,7 +459,7 @@ public final class StudentFakebookOracle extends FakebookOracle {
                     UserInfo u1 = new UserInfo(rst_1.getLong(1),rst_1.getString(3),rst_1.getString(4));
                     UserInfo u2 = new UserInfo(rst_1.getLong(2),rst_1.getString(5),rst_1.getString(6));
                     MatchPair mp = new MatchPair(u1,rst_1.getInt(7),u2,rst_1.getInt(8));
-                        System.out.println("Line 445");
+                        System.out.println("Line 462");
                 //  PhotoInfo(long pID, long aID, String link, String albName)
                     try (Statement stmt_2 = oracle.createStatement(FakebookOracleConstants.AllScroll, FakebookOracleConstants.ReadOnly)){
                         ResultSet rst_2 = stmt_2.executeQuery(
@@ -469,7 +469,7 @@ public final class StudentFakebookOracle extends FakebookOracle {
                                     "AND T1.tag_photo_id=T2.tag_photo_id AND A.Album_id = P.Album_id " +
                             "ORDER BY P.Photo_id"
                         );
-                        System.out.println("Line 455");
+                        System.out.println("Line 472");
                         while(rst_2.next()){
                             PhotoInfo p = new PhotoInfo(rst_2.getLong(1),rst_2.getLong(2),rst_2.getString(3),rst_2.getString(4));
                             mp.addSharedPhoto(p);
