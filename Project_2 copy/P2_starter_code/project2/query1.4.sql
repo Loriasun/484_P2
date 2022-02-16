@@ -1,0 +1,4 @@
+SELECT COUNT(*) AS most_first_name, FIRST_NAME
+FROM Users 
+GROUP BY FIRST_NAME
+ORDER BY most_first_name DESC, FIRST_NAME ASC;
